@@ -1,0 +1,22 @@
+{
+  "name": "@esurkov1/database-module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Evgeny Surkov",
+  "dependencies": {
+    "mysql2": "^3.13.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esurkov1/database-module.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esurkov1/database-module/issues"
+  },
+  "homepage": "https://github.com/esurkov1/database-module#readme",
+  "description": ""
+}
