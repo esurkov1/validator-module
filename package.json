@@ -1,6 +1,6 @@
 {
-  "name": "@esurkov1/database-module",
-  "version": "1.0.0",
+  "name": "@esurkov1/validator-module",
+  "version": "1.0.1",
   "main": "index.js",
   "author": "Evgeny Surkov",
   "dependencies": {
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/esurkov1/database-module.git"
+    "url": "git+https://github.com/esurkov1/validator-module.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/esurkov1/database-module/issues"
+    "url": "https://github.com/esurkov1/validator-module/issues"
   },
-  "homepage": "https://github.com/esurkov1/database-module#readme",
+  "homepage": "https://github.com/esurkov1/validator-module#readme",
   "description": ""
 }

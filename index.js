@@ -158,6 +158,24 @@ class ArrayValidator extends BaseValidator {
     }
 }
 
+class JSONValidator extends BaseValidator {
+    constructor() {
+        super();
+    }
+
+    validate(value, field) {
+        if (value === undefined && !this.isRequired) {
+            return; // Пропускаем необязательные поля
+        }
+        try {
+            JSON.parse(value);
+        } catch (e) {
+            throw { field, message: 'Invalid JSON format' };
+        }
+        return super.validate(value, field);
+    }
+}
+
 class Schema {
     constructor(schema, only = false) {
         this.schema = new Map(Object.entries(schema)); // Используем Map для быстрого поиска
@@ -210,6 +228,10 @@ class Validator {
 
     static array() {
         return new ArrayValidator();
+    }
+
+    static json() {
+        return new JSONValidator();
     }
 
     static createSchema(schemaDefinition, only = false) {
