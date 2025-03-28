@@ -14,6 +14,15 @@ class BaseValidator {
         return this;
     }
 
+    oneOf(allowedValues) {
+        this.rules.push((value, field) => {
+            if (!allowedValues.includes(value)) {
+                throw { field, message: `Value must be one of: ${allowedValues.join(', ')}` };
+            }
+        });
+        return this;
+    }
+
     validate(value, field) {
         if (value === undefined && !this.isRequired) {
             return; // Пропускаем необязательные поля
@@ -122,7 +131,7 @@ class BooleanValidator extends BaseValidator {
 class ArrayValidator extends BaseValidator {
     constructor() {
         super();
-        this.itemValidator = null; // Можно задать валидатор для элементов массива
+        this.itemValidator = null;
     }
 
     minLength(length) {
@@ -165,7 +174,7 @@ class JSONValidator extends BaseValidator {
 
     validate(value, field) {
         if (value === undefined && !this.isRequired) {
-            return; // Пропускаем необязательные поля
+            return;
         }
         try {
             JSON.parse(value);
@@ -178,7 +187,7 @@ class JSONValidator extends BaseValidator {
 
 class Schema {
     constructor(schema, only = false) {
-        this.schema = new Map(Object.entries(schema)); // Используем Map для быстрого поиска
+        this.schema = new Map(Object.entries(schema));
         this.only = only;
     }
 
@@ -186,7 +195,6 @@ class Schema {
         const schemaKeys = Array.from(this.schema.keys());
         const dataKeys = Object.keys(data);
 
-        // 1. Проверка на наличие лишних полей
         if (this.only) {
             const extraFields = dataKeys.filter(key => !schemaKeys.includes(key));
             if (extraFields.length > 0) {
@@ -194,14 +202,12 @@ class Schema {
             }
         }
 
-        // 2. Проверка на наличие обязательных полей
         for (let [key, validator] of this.schema.entries()) {
             if (!(key in data) && validator.isRequired) {
                 throw { field: key, message: 'Field is required' };
             }
         }
 
-        // 3. Проверка по каждому правилу валидации
         for (let key of schemaKeys) {
             if (key in data) {
                 const validator = this.schema.get(key);
